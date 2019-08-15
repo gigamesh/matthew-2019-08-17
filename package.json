@@ -5,7 +5,7 @@
   "main": "src/server/index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "npm run build && node src/server/index.js",
+    "start": "npm run build && npm run server",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -14,7 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "cloudinary": "^1.14.0",
+    "dotenv": "^8.0.0",
     "express": "^4.16.3",
+    "express-formidable": "^1.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },
