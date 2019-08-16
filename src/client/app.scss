@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+
+$breakPointMD: 768px;
+$breakPointSM: 480px;
+
+$white: #fff;
+$black: #111;
+$grey: #777;
+$lightGrey: #bbb;
+$deleteColor: #c24e4e;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+main {
+  margin: 50px auto;
+  max-width: 960px;
+  width: 90%;
+}
+
+.searchBoxWrapper {
+  display: inline-block;
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+}
+
+.searchBox {
+  height: 30px;
+  padding: 0 0.5em;
+  font-size: 1em;
+  width: 100%;
+  border: 1px solid $lightGrey;
+  outline: none;
+
+  &:focus {
+    border: 1px solid $black;
+  }
+}
+
+.searchIcon {
+  border: 0;
+  background: none;
+  position: absolute;
+  right: 0.8em;
+  top: 4px;
+  z-index: 1;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  color: $grey;
+
+  &:hover {
+    color: $black;
+  }
+}
+
+.gridHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  span:last-child {
+    font-size: 0.6em;
+  }
+
+  @media only screen and (max-width: $breakPointMD) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.cardGrid {
+  display: grid;
+  position: relative;
+  grid-gap: 25px;
+  grid-template-columns: repeat(3, 1fr);
+
+  @media only screen and (max-width: $breakPointMD) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (max-width: $breakPointSM) {
+    grid-template-columns: repeat(1, 3fr);
+  }
+}
+
+.fileCard {
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  .thumbnail {
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .fileName {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 180px;
+    text-overflow: ellipsis;
+  }
+
+  .fileSize {
+    opacity: 0.7;
+  }
+
+  .deleteBtn {
+    background: transparent;
+    border: 1px solid $deleteColor;
+    color: $deleteColor;
+    outline: none;
+    font-size: 1em;
+    cursor: pointer;
+
+    &:hover {
+      color: saturate($deleteColor, 30);
+      border-color: saturate($deleteColor, 30);
+    }
+
+    &:active {
+      color: $white;
+      background: $deleteColor;
+      border-color: saturate($deleteColor, 0);
+    }
+  }
+
+  .fileCardRow {
+    display: flex;
+
+    &:first-of-type {
+      font-size: 1.2em;
+    }
+
+    &:last-of-type {
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+  }
+}
