@@ -13,6 +13,7 @@
 ## Improvements
 - Pagination
 - Infinite scroll
+- use useReducer and/or useContext to better organize state management
 - Server-side rendering
 - Better UX to switch between search results and all results
 - Sorting

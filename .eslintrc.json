@@ -1,14 +1,21 @@
 {
   "parser": "babel-eslint",
   "extends": ["airbnb"],
+  "plugins": ["jest"],
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jest/globals": true
   },
   "rules": {
     "no-console": "off",
     "comma-dangle": "off",
     "react/jsx-filename-extension": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
   }
 }
