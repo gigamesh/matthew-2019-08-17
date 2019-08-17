@@ -20,6 +20,7 @@ export default function SearchBox(props: SearchBoxProps) {
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
 
+    console.log('searching!', searchText);
     if (!searchText) {
       toast.error('You forgot to enter search text 😉', toastOptions as any);
     } else {

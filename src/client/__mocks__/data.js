@@ -65,3 +65,18 @@ export const formattedImageList = [
       'http://res.cloudinary.com/masurka/image/upload/w_320/v1566020671/coding-test/cristofer-jeschke-JLYtIEA9d_o-unsplash.jpg'
   }
 ];
+
+export const mockUploadedImg = {
+  bytes: 2395954,
+  created_at: '2019-08-17T05:44:31Z',
+  format: 'png',
+  height: 5689,
+  public_id: 'coding-test/stevebrule',
+  resource_type: 'image',
+  secure_url:
+    'https://res.cloudinary.com/masurka/image/upload/v1566020671/coding-test/stevebrule.png',
+  type: 'upload',
+  url: 'http://res.cloudinary.com/masurka/image/upload/v1566020671/coding-test/stevebrule.png',
+  version: 1566020672,
+  width: 3793
+};
