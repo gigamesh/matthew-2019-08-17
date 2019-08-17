@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { API_URL } from './constants';
-import { setFullList } from './api';
-import { formatFileData } from './helpers';
+import { toast } from 'react-toastify';
+import { API_URL, toastOptions } from '../constants';
+import { setFullList } from '../api';
+import { formatFileData } from '../helpers';
 
 const { useState } = React;
 
@@ -14,26 +15,28 @@ interface SearchBoxProps {
 
 export default function SearchBox(props: SearchBoxProps) {
   const [searchText, setSearchText] = useState('');
-  const {
-    setIsSearchResults, setFileList, setTotalFileSize, isSearchResults
-  } = props;
+  const { setIsSearchResults, setFileList, isSearchResults } = props;
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
 
     if (!searchText) {
-      console.log('TO DO!');
+      toast.error('You forgot to enter search text 😉', toastOptions as any);
     } else {
       fetch(`${API_URL}/search?searchString="${searchText}"`)
         .then((res) => {
-          if (res.status !== 200) throw new Error();
+          if (res.status !== 200) {
+            toastOptions.onClose = () => setSearchText('');
+            toast.error('No images found 😪', toastOptions as any);
+          }
           return res.json();
         })
         .then((data) => {
+          if (!data.resources) return;
+
           setIsSearchResults(true);
           const files = formatFileData(data.resources);
           setFileList(files);
-          setTotalFileSize(files[0].size);
         })
         .catch(err => console.error(err));
     }
@@ -42,25 +45,23 @@ export default function SearchBox(props: SearchBoxProps) {
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     // if input is empty and the search results are currently displayed, fetch full list of images
     if (!event.currentTarget.value && isSearchResults) {
-      setFullList({ setTotalFileSize, setFileList, setIsSearchResults });
+      setFullList(setFileList);
       setIsSearchResults(false);
     }
     setSearchText(event.currentTarget.value);
   };
 
   return (
-    <div>
-      <form onSubmit={handleSearch} className="searchBoxWrapper">
-        <input
-          className="searchBox"
-          placeholder="Search documents..."
-          value={searchText}
-          onChange={handleChange}
-        />
-        <button type="submit" className="searchIcon">
-          <i className="material-icons">search</i>
-        </button>
-      </form>
-    </div>
+    <form onSubmit={handleSearch} className="searchBoxWrapper">
+      <input
+        className="searchBox"
+        placeholder="Search documents..."
+        value={searchText}
+        onChange={handleChange}
+      />
+      <button type="submit" className="searchIcon">
+        <i className="material-icons">search</i>
+      </button>
+    </form>
   );
 }

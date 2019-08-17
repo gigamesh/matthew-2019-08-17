@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { kbString } from '../helpers';
 
 interface ImageCardProps {
   file: FileType;
@@ -14,7 +15,7 @@ export default function ImageCard(props: ImageCardProps) {
         <span className="fileName">{file.name}</span>
       </div>
       <div className="fileCardRow">
-        <span className="fileSize">{file.size}</span>
+        <span className="fileSize">{kbString(file.size)}</span>
         <button className="deleteBtn" type="button" onClick={() => handleDelete(file.name)}>
           Delete
         </button>

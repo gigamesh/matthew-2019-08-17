@@ -2,8 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const cloudinary = require('cloudinary');
 const formidableMiddleware = require('express-formidable');
+const cors = require('cors');
 
-const app = express();
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200
+};
+
+const server = express();
 
 const CLOUDINARY_DIR = 'coding-test/';
 const SIZE_LIMIT = 1e7;
@@ -14,8 +20,9 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 });
 
-app.use(express.static('dist'));
-app.use(formidableMiddleware());
+server.use(express.static('dist'));
+server.use(formidableMiddleware());
+server.use(cors(corsOptions));
 
 // GET FULL DOCUMENT LIST
 
@@ -34,11 +41,11 @@ function getDocList(req, res) {
   );
 }
 
-app.get('/api/list', getDocList);
+server.get('/api/list', getDocList);
 
 // UPLOAD FILE
 
-app.post('/api/upload', (req, res) => {
+server.post('/api/upload', (req, res) => {
   // gets first image from req.files array (assumes only one image exists)
   const image = Object.values(req.files)[0];
 
@@ -74,7 +81,7 @@ app.post('/api/upload', (req, res) => {
 });
 
 // SEARCH FOR FILE
-app.get('/api/search', (req, res) => {
+server.get('/api/search', (req, res) => {
   const { searchString } = req.query;
 
   if (!searchString) {
@@ -97,7 +104,7 @@ app.get('/api/search', (req, res) => {
 });
 
 // DELETE FILE
-app.delete('/api/delete', (req, res) => {
+server.delete('/api/delete', (req, res) => {
   const { publicId } = req.query;
   cloudinary.v2.api.delete_resources([publicId], (err, cloudResult) => {
     if (err) {
@@ -113,4 +120,4 @@ app.delete('/api/delete', (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
+server.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));

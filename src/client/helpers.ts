@@ -15,12 +15,13 @@ export const formatFileData = (apiResults: APIResults) => {
       const { public_id, format, bytes } = file;
       const newFile: FileType = {
         name: public_id.replace(CLOUDINARY_DIR, ''),
-        size: kbString(bytes),
+        size: bytes,
         thumbnail: `${`${ROOT_CLOUDINARY_URL + THUMBNAIL_SIZE}/v${
           file.version
         }/${public_id}.${format}`}`
       };
       return newFile;
     });
-  } return [];
+  }
+  return [];
 };

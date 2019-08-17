@@ -1,13 +1,18 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap");
 
 $breakPointMD: 768px;
 $breakPointSM: 480px;
+
+$inputHeight: 35px;
+$inputPadding: 0 0.8em;
+$smallLoader: 60px;
 
 $white: #fff;
 $black: #111;
 $grey: #777;
 $lightGrey: #bbb;
 $deleteColor: #c24e4e;
+$uploadColor: #59aa59;
 
 * {
   box-sizing: border-box;
@@ -24,16 +29,78 @@ main {
   width: 90%;
 }
 
+.topHeader {
+  display: flex;
+  height: $smallLoader;
+  align-items: center;
+  justify-content: space-between;
+
+  @media only screen and (max-width: $breakPointSM) {
+    flex-direction: column-reverse;
+  }
+}
+
+.uploadBtnWrap {
+  display: flex;
+  align-items: center;
+
+  @media only screen and (max-width: $breakPointSM) {
+    justify-content: center;
+    margin-left: 0;
+    margin-bottom: 1em;
+    min-width: 100%;
+  }
+}
+
+.uploadInput {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $uploadColor;
+  cursor: pointer;
+  border: 2px solid $uploadColor;
+  height: $inputHeight;
+  padding: $inputPadding;
+  background: $white;
+  margin-left: 1em;
+  font-weight: bold;
+  width: 130px;
+
+  &:hover {
+    border-color: saturate($uploadColor, 30);
+    color: saturate($uploadColor, 30);
+  }
+
+  @media only screen and (max-width: $breakPointSM) {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
 .searchBoxWrapper {
   display: inline-block;
   position: relative;
   max-width: 500px;
   width: 100%;
+
+  @media only screen and (max-width: $breakPointSM) {
+    margin-right: 0;
+  }
 }
 
 .searchBox {
-  height: 30px;
-  padding: 0 0.5em;
+  height: $inputHeight;
+  line-height: $inputHeight;
+  padding: $inputPadding;
   font-size: 1em;
   width: 100%;
   border: 1px solid $lightGrey;
@@ -49,7 +116,7 @@ main {
   background: none;
   position: absolute;
   right: 0.8em;
-  top: 4px;
+  top: 6px;
   z-index: 1;
   outline: none;
   padding: 0;
@@ -65,6 +132,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  font-weight: normal;
 
   span:last-child {
     font-size: 0.6em;
@@ -145,4 +213,9 @@ main {
       margin-top: 10px;
     }
   }
+}
+
+.toastClass {
+  padding: 1em;
+  height: 60px;
 }

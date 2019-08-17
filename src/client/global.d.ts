@@ -1,5 +1,5 @@
 interface FileType {
   name: string;
   thumbnail: string;
-  size: string;
+  size: number;
 }
