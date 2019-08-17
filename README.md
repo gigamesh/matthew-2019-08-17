@@ -30,8 +30,12 @@
 - express-formidable: parses multipart/form-data
 - typescript: type safety
 - dotenv: environment variables (for cloudinary)
-- axios: easier HTTP requests (I initially used fetch but started to refactor midway through)
+- axios: easier HTTP requests (I initially used fetch but went with axios for the file upload)
 - react-toastify: pop-ups for communicating interactions to user
+- jest: testing
+- @testing-library/react: this is an interesting test suite that emphasizes Behavior Driven Development. Its API is focused on testing from the user's perpective rather than implementation details (the idea being that this allows for code refactoring without breaking tests as often). I unfortunatley don't have much experience with it yet though, so I was only able to finish two tests.
+- @react-mock/fetch: mocks the fetch API using a react context provider
+- jest-mock-axios: mocks axios (I decided to use axios for the file upload request because it is much simpler than using the fetch API)
 
 ## API
 The server is a simple REST JSON API built with Node & express
@@ -60,3 +64,4 @@ The server is a simple REST JSON API built with Node & express
 ## Other notes
 - Clearing the input makes the full image list repopulate after searching (there was no button in the wireframes so I figured this would be the most straightforward UX)
 - The search input only matches full words separated by special characters or spaces (this limitation stems from Cloudinary's API)
+- run tests with `yarn test` -- I was only able to write two tests. I made some progress on a few others but I had a hard time with getting the app to update when simulating click events.
