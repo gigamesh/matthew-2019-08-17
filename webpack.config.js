@@ -5,31 +5,32 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const outputDirectory = 'dist';
 
 module.exports = {
-  entry: ['babel-polyfill', './src/client/index.js'],
+  entry: ['babel-polyfill', './src/client/index.tsx'],
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, outputDirectory),
     filename: 'bundle.js'
   },
   module: {
-    rules: [{
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
-      },
+    rules: [
+      { test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        test: /\.(s*)css$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         loader: 'url-loader?limit=100000'
+      },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader'
       }
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.json']
   },
   devServer: {
     port: 3000,

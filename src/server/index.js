@@ -17,19 +17,21 @@ cloudinary.config({
 app.use(express.static('dist'));
 app.use(formidableMiddleware());
 
-
 // GET FULL DOCUMENT LIST
 
 function getDocList(req, res) {
-  cloudinary.v2.api.resources({
-    type: 'upload',
-    prefix: CLOUDINARY_DIR
-  }, (err, cloudResponse) => {
-    if (err) {
-      res.status(500).json(err);
+  cloudinary.v2.api.resources(
+    {
+      type: 'upload',
+      prefix: CLOUDINARY_DIR
+    },
+    (err, cloudResponse) => {
+      if (err) {
+        res.status(500).json(err);
+      }
+      res.status(200).json(cloudResponse);
     }
-    res.status(200).json(cloudResponse);
-  });
+  );
 }
 
 app.get('/api/list', getDocList);
@@ -55,10 +57,12 @@ app.post('/api/upload', (req, res) => {
     return;
   }
 
+  const imageName = image.name.replace(/(.jpg)|(.png)/, '');
+
   // saves image to cloudinary folder with original file name as public_id
   const promise = cloudinary.v2.uploader.upload(image.path, {
     folder: CLOUDINARY_DIR,
-    public_id: image.name
+    public_id: imageName
   });
 
   promise
@@ -78,7 +82,10 @@ app.get('/api/search', (req, res) => {
     return;
   }
 
-  cloudinary.v2.search.expression(searchString).max_results(10).execute()
+  cloudinary.v2.search
+    .expression(searchString)
+    .max_results(10)
+    .execute()
     .then((result) => {
       if (!result.total_count) {
         res.status(404).json({ message: 'Not found' });
@@ -101,10 +108,9 @@ app.delete('/api/delete', (req, res) => {
     if (cloudResult.deleted[publicId] === 'not_found') {
       res.status(404).json({ message: 'Not found' });
     } else {
-      res.status(200).json(cloudResult);
+      getDocList(req, res);
     }
   });
 });
-
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));

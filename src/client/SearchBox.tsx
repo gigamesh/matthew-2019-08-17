@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { API_URL } from './constants';
+import { setFullList } from './api';
 import { formatFileData } from './helpers';
 
 const { useState } = React;
@@ -7,11 +8,15 @@ const { useState } = React;
 interface SearchBoxProps {
   setIsSearchResults: React.Dispatch<React.SetStateAction<boolean>>;
   setFileList: React.Dispatch<React.SetStateAction<any[]>>;
+  setTotalFileSize: React.Dispatch<React.SetStateAction<string>>;
   isSearchResults: boolean;
 }
 
 export default function SearchBox(props: SearchBoxProps) {
   const [searchText, setSearchText] = useState('');
+  const {
+    setIsSearchResults, setFileList, setTotalFileSize, isSearchResults
+  } = props;
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
@@ -25,19 +30,20 @@ export default function SearchBox(props: SearchBoxProps) {
           return res.json();
         })
         .then((data) => {
-          props.setIsSearchResults(true);
+          setIsSearchResults(true);
           const files = formatFileData(data.resources);
-          props.setFileList(files);
-          console.log(files);
+          setFileList(files);
+          setTotalFileSize(files[0].size);
         })
         .catch(err => console.error(err));
     }
   };
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (props.isSearchResults) {
-      console.log('TODO: reset full list');
-      props.setIsSearchResults(false);
+    // if input is empty and the search results are currently displayed, fetch full list of images
+    if (!event.currentTarget.value && isSearchResults) {
+      setFullList({ setTotalFileSize, setFileList, setIsSearchResults });
+      setIsSearchResults(false);
     }
     setSearchText(event.currentTarget.value);
   };

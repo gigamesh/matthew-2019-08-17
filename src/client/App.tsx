@@ -1,35 +1,20 @@
 import * as React from 'react';
 import { API_URL, CLOUDINARY_DIR } from './constants';
-import { kbString, formatFileData } from './helpers';
+import { formatFileData } from './helpers';
 import ImageCard from './ImageCard';
 import SearchBox from './SearchBox';
-import './app.scss';
+import { setFullList } from './api';
+import './styles/main.scss';
 
 const { useState, useEffect } = React;
 
-export default function App() {
-  const [fileList, setFileList] = useState([]);
+function App() {
+  const [fileList, setFileList] = useState([] as FileType[]);
   const [totalFileSize, setTotalFileSize] = useState('');
   const [isSearchResults, setIsSearchResults] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_URL}/list`)
-      .then(res => res.json())
-      .then((data) => {
-        const totalSize = data.resources.reduce(
-          (total: number, current: { bytes: number }) => total + current.bytes,
-          0
-        );
-
-        setTotalFileSize(kbString(totalSize));
-
-        const files = formatFileData(data.resources);
-        setFileList(files);
-
-        // reset isSearchResults in case previous results were from searching
-        setIsSearchResults(false);
-      })
-      .catch(err => console.error(err));
+    setFullList({ setTotalFileSize, setFileList, setIsSearchResults });
   }, []);
 
   const handleDelete = (filename: string) => {
@@ -39,7 +24,7 @@ export default function App() {
     })
       .then(res => res.json())
       .then((data) => {
-        const files = formatFileData(data.resources);
+        const files: FileType[] = formatFileData(data.resources);
         setFileList(files);
       });
   };
@@ -47,20 +32,14 @@ export default function App() {
   return (
     <main>
       <SearchBox
+        setTotalFileSize={setTotalFileSize}
         setIsSearchResults={setIsSearchResults}
         isSearchResults={isSearchResults}
         setFileList={setFileList}
       />
       <h1 className="gridHeader">
-        <span>
-          {fileList.length}
-          {' '}
-Documents
-        </span>
-        <span>
-          Total size:
-          {totalFileSize}
-        </span>
+        <span>{`${fileList.length} Documents`}</span>
+        <span>{`Total: ${totalFileSize}`}</span>
       </h1>
 
       <div className="cardGrid">
@@ -71,3 +50,5 @@ Documents
     </main>
   );
 }
+
+export default App;
