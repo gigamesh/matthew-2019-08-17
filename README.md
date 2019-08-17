@@ -14,6 +14,7 @@
 - Pagination
 - Infinite scroll
 - use useReducer and/or useContext to better organize state management
+- split up styles into multiple files and use BEM or css-modules to isolate name-space/scope
 - Server-side rendering
 - Better UX to switch between search results and all results
 - Sorting
@@ -58,5 +59,4 @@ The server is a simple REST JSON API built with Node & express
 ---
 ## Other notes
 - Clearing the input makes the full image list repopulate after searching (there was no button in the wireframes so I figured this would be the most straightforward UX)
-
-Had a lot of fun on this! 
+- The search input only matches full words separated by special characters or spaces (this limitation stems from Cloudinary's API)
