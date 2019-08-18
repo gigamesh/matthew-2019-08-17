@@ -8,8 +8,9 @@ interface ImageCardProps {
 
 export default function ImageCard(props: ImageCardProps) {
   const { file, handleDelete } = props;
+
   return (
-    <div className="fileCard">
+    <div className="fileCard" data-testid={file.name} role="Image Card">
       <img className="thumbnail" src={file.thumbnail} alt={file.name} />
       <div className="fileCardRow">
         <span className="fileName">{file.name}</span>

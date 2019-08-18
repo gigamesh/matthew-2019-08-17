@@ -20,7 +20,6 @@ export default function SearchBox(props: SearchBoxProps) {
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
 
-    console.log('searching!', searchText);
     if (!searchText) {
       toast.error('You forgot to enter search text 😉', toastOptions as any);
     } else {
@@ -34,6 +33,7 @@ export default function SearchBox(props: SearchBoxProps) {
         })
         .then((data) => {
           if (!data.resources) return;
+          console.log(data);
 
           setIsSearchResults(true);
           const files = formatFileData(data.resources);
@@ -60,7 +60,7 @@ export default function SearchBox(props: SearchBoxProps) {
         value={searchText}
         onChange={handleChange}
       />
-      <button type="submit" className="searchIcon">
+      <button type="submit" className="searchIcon" role="Search Button">
         <i className="material-icons">search</i>
       </button>
     </form>
