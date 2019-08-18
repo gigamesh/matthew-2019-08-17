@@ -64,4 +64,4 @@ The server is a simple REST JSON API built with Node & express
 ## Other notes
 - Clearing the input makes the full image list repopulate after searching (there was no button in the wireframes so I figured this would be the most straightforward UX)
 - The search input only matches full words separated by special characters or spaces (this limitation stems from Cloudinary's API)
-- run tests with `yarn test` -- I was only able to write two tests. I made some progress on a few others but I had a hard time with getting the app to update when simulating click events.
+- run tests with `yarn test` -- I wasn't able to finish tests for everything.
