@@ -33,7 +33,6 @@ export default function SearchBox(props: SearchBoxProps) {
         })
         .then((data) => {
           if (!data.resources) return;
-          console.log(data);
 
           setIsSearchResults(true);
           const files = formatFileData(data.resources);
