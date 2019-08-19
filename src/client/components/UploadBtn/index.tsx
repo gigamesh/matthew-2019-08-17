@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Loader from './Loader';
-import { toastOptions, API_URL, BREAKPOINT_SM } from '../constants';
-import { formatFileData } from '../helpers';
+import Loader from '../Loader';
+import { toastOptions, API_URL, BREAKPOINT_SM } from '../../constants';
+import { formatFileData } from '../../helpers';
 
 const { useState } = React;
 
@@ -17,7 +17,7 @@ function UploadBtn(props: UploadBtnProps) {
   const [btnText, setBtnText] = useState('UPLOAD');
   const { setFileList, windowWidth } = props;
 
-  const handleUpload = (event: React.ChangeEvent<any>) => {
+  const handleUpload = async (event: React.ChangeEvent<any>) => {
     const file = event.target.files[0];
     const invalidFileError = validateFile(file);
 
@@ -30,20 +30,16 @@ function UploadBtn(props: UploadBtnProps) {
       setLoading(true);
       setBtnText('UPLOADING...');
 
-      axios
-        .post(`${API_URL}/upload`, data)
-        .then((res) => {
-          toast.success('Image uploaded! 🤙', toastOptions as any);
-          const files = formatFileData(res.data.resources);
-          setFileList(files);
-        })
-        .catch((err) => {
-          console.error(err);
-        })
-        .finally(() => {
-          setLoading(false);
-          setBtnText('UPLOAD');
-        });
+      try {
+        const serverResponse = await axios.post(`${API_URL}/upload`, data);
+        toast.success('Image uploaded! 🤙', toastOptions as any);
+        const files = formatFileData(serverResponse.data.resources);
+        setFileList(files);
+      } catch (error) {
+        toast.error('Something went wrong 😢', toastOptions as any);
+      }
+      setLoading(false);
+      setBtnText('UPLOAD');
     }
   };
 

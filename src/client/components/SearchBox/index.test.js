@@ -2,9 +2,9 @@ import React from 'react';
 import { FetchMock } from '@react-mock/fetch';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import { wait } from '@testing-library/dom';
-import { API_URL } from '../constants.ts';
-import SearchBox from './SearchBox.tsx';
-import { rawImageList, formattedImageList } from '../__mocks__/data';
+import { API_URL } from '../../constants.ts';
+import SearchBox from './index.tsx';
+import { rawImageList, formattedImageList } from '../../__mocks__/data';
 
 afterEach(cleanup);
 

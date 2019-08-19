@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { kbString } from '../helpers';
+import { kbString } from '../../helpers';
 
 interface ImageCardProps {
   file: FileType;
