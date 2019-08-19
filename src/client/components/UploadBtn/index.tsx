@@ -55,6 +55,7 @@ function UploadBtn(props: UploadBtnProps) {
         type="file"
         name="uploadInput"
         id="uploadInput"
+        role="File Input"
         onChange={handleUpload}
       />
     </div>
