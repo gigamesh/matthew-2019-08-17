@@ -80,3 +80,9 @@ export const mockUploadedImg = {
   version: 1566020672,
   width: 3793
 };
+
+export const mockFile = {
+  name: 'stevebrule.jpg',
+  size: 3634038,
+  type: 'image/jpeg'
+};

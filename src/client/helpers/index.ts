@@ -1,4 +1,4 @@
-import { CLOUDINARY_DIR, ROOT_CLOUDINARY_URL, THUMBNAIL_SIZE } from './constants';
+import { CLOUDINARY_DIR, ROOT_CLOUDINARY_URL, THUMBNAIL_SIZE } from '../constants';
 
 export const kbString = (bytes: number) => `${Math.round(((bytes / 1000) * 10) / 10).toLocaleString()} kb`;
 
@@ -24,4 +24,15 @@ export const formatFileData = (apiResults: APIResults) => {
     });
   }
   return [];
+};
+
+export const getErrorIfFileInvalid = (file: { size: number; type: string }) => {
+  let error = '';
+  if (file.size > 1e7) {
+    error = 'File must be less than 10mb';
+  }
+  if (!/(jpeg|jpg|png)/.test(file.type)) {
+    error = 'File must be a JPG or PNG';
+  }
+  return error;
 };

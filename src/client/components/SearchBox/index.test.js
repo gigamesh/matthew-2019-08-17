@@ -37,9 +37,10 @@ it('calls search function on button click', async (done) => {
       response: { status: 200, resources: [rawImageList[1]] }
     }
   ];
+  const setFileList = jest.fn();
   const searchBoxProps = {
     setIsSearchResults: () => {},
-    setFileList: jest.fn(),
+    setFileList,
     setTotalFileSize: () => {},
     isSearchResults: false
   };
@@ -51,6 +52,6 @@ it('calls search function on button click', async (done) => {
   const searchBtn = await findByRole('Search Button');
   fireEvent.click(searchBtn);
 
-  await wait(() => expect(searchBoxProps.setFileList).toHaveBeenCalledWith([formattedImageList[1]]));
+  await wait(() => expect(setFileList).toHaveBeenCalledWith([formattedImageList[1]]));
   done();
 });
