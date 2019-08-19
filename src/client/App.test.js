@@ -1,21 +1,10 @@
 import React from 'react';
-// import ReactTestUtils from 'react-dom/test-utils';
-// import mockAxios from 'jest-mock-axios';
 import { FetchMock } from '@react-mock/fetch';
-import {
-  render,
-  fireEvent,
-  cleanup
-  // waitForElement
-} from '@testing-library/react';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 import { wait } from '@testing-library/dom';
 import { API_URL, CLOUDINARY_DIR } from './constants.ts';
 import App from './App.tsx';
-import {
-  rawImageList,
-  formattedImageList
-  // mockUploadedImg
-} from './__mocks__/data';
+import { rawImageList, formattedImageList } from './__mocks__/data';
 
 afterEach(cleanup);
 
@@ -61,20 +50,3 @@ it('deletes image from list', async (done) => {
   await wait(() => expect(getAllByRole('Image Card')).toHaveLength(2));
   done();
 });
-
-// it('uploads an image', async () => {
-//   // mockAxios.mockResponse({ resources: [...rawImageList, mockUploadedImg] });
-//   const fetchMocks = [
-//     { matcher: `${API_URL}/list`, method: 'GET', response: { resources: rawImageList } }
-//   ];
-
-//   const { getByAltText, getByLabelText } = renderComponent(fetchMocks);
-
-//   const file = new File(['(⌐□_□)'], 'stevebrule.png', { type: 'image/png' });
-//   const uploadBtn = getByLabelText('UPLOAD');
-
-//   ReactTestUtils.Simulate.change(uploadBtn, { target: { files: [file] } });
-//   const uploadedImg = await waitForElement(() => getByAltText('stevebrule'));
-
-//   expect(uploadedImg).toBeTruthy();
-// });
